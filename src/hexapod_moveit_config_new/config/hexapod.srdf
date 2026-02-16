@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="hexapod">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="leg1">
+        <link name="leg1_linkA"/>
+        <link name="leg1_linkB"/>
+        <link name="leg1_linkC"/>
+        <link name="leg1_linkP"/>
+        <joint name="leg1_jointA"/>
+        <joint name="leg1_jointB"/>
+        <joint name="leg1_jointC"/>
+        <joint name="leg1_jointP"/>
+    </group>
+    <group name="leg2">
+        <link name="leg2_linkA"/>
+        <link name="leg2_linkB"/>
+        <link name="leg2_linkC"/>
+        <link name="leg2_linkP"/>
+        <joint name="leg2_jointA"/>
+        <joint name="leg2_jointB"/>
+        <joint name="leg2_jointC"/>
+        <joint name="leg2_jointP"/>
+    </group>
+    <group name="leg3">
+        <link name="leg3_linkA"/>
+        <link name="leg3_linkB"/>
+        <link name="leg3_linkC"/>
+        <link name="leg3_linkP"/>
+        <joint name="leg3_jointA"/>
+        <joint name="leg3_jointB"/>
+        <joint name="leg3_jointC"/>
+        <joint name="leg3_jointP"/>
+    </group>
+    <group name="leg4">
+        <link name="leg4_linkA"/>
+        <link name="leg4_linkB"/>
+        <link name="leg4_linkC"/>
+        <link name="leg4_linkP"/>
+        <joint name="leg4_jointA"/>
+        <joint name="leg4_jointB"/>
+        <joint name="leg4_jointC"/>
+        <joint name="leg4_jointP"/>
+    </group>
+    <group name="leg5">
+        <link name="leg5_linkA"/>
+        <link name="leg5_linkB"/>
+        <link name="leg5_linkC"/>
+        <link name="leg5_linkP"/>
+        <joint name="leg5_jointA"/>
+        <joint name="leg5_jointB"/>
+        <joint name="leg5_jointC"/>
+        <joint name="leg5_jointP"/>
+    </group>
+    <group name="leg6">
+        <link name="leg6_linkA"/>
+        <link name="leg6_linkB"/>
+        <link name="leg6_linkC"/>
+        <link name="leg6_linkP"/>
+        <joint name="leg6_jointA"/>
+        <joint name="leg6_jointB"/>
+        <joint name="leg6_jointC"/>
+        <joint name="leg6_jointP"/>
+    </group>
+
+    <group name="FULLBODY">
+        <group name="leg1"/>
+        <group name="leg2"/>
+        <group name="leg3"/>
+        <group name="leg4"/>
+        <group name="leg5"/>
+        <group name="leg6"/>
+    </group>
+    <group name="Gait1">
+        <group name="leg1"/>
+        <group name="leg3"/>
+        <group name="leg5"/>
+    </group>
+    <group name="Gait2">
+        <group name="leg2"/>
+        <group name="leg4"/>
+        <group name="leg6"/>
+    </group>
+
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="leg1ZEROS" group="leg1">
+        <joint name="leg1_jointA" value="0"/>
+        <joint name="leg1_jointB" value="0"/>
+        <joint name="leg1_jointC" value="0"/>
+    </group_state>
+    <group_state name="leg2ZEROS" group="leg2">
+        <joint name="leg2_jointA" value="0"/>
+        <joint name="leg2_jointB" value="0"/>
+        <joint name="leg2_jointC" value="0"/>
+    </group_state>
+    <group_state name="leg3ZEROS" group="leg3">
+        <joint name="leg3_jointA" value="0"/>
+        <joint name="leg3_jointB" value="0"/>
+        <joint name="leg3_jointC" value="0"/>
+    </group_state>
+    <group_state name="leg4ZEROS" group="leg4">
+        <joint name="leg4_jointA" value="0"/>
+        <joint name="leg4_jointB" value="0"/>
+        <joint name="leg4_jointC" value="0"/>
+    </group_state>
+    <group_state name="leg5ZEROS" group="leg5">
+        <joint name="leg5_jointA" value="0"/>
+        <joint name="leg5_jointB" value="0"/>
+        <joint name="leg5_jointC" value="0"/>
+    </group_state>
+    <group_state name="leg6ZEROS" group="leg6">
+        <joint name="leg6_jointA" value="0"/>
+        <joint name="leg6_jointB" value="0"/>
+        <joint name="leg6_jointC" value="0"/>
+    </group_state>
+
+ <!--Patas a Home individual-->
+
+    <group_state name="leg1_HOME" group="leg1">
+        <joint name="leg1_jointA" value="0"/>
+        <joint name="leg1_jointB" value="-0.5"/>
+        <joint name="leg1_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="leg2_HOME" group="leg2">
+        <joint name="leg2_jointA" value="0"/>
+        <joint name="leg2_jointB" value="-0.5"/>
+        <joint name="leg2_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="leg3_HOME" group="leg3">
+        <joint name="leg3_jointA" value="0"/>
+        <joint name="leg3_jointB" value="-0.5"/>
+        <joint name="leg3_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="leg4_HOME" group="leg4">
+        <joint name="leg4_jointA" value="0"/>
+        <joint name="leg4_jointB" value="-0.5"/>
+        <joint name="leg4_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="leg5_HOME" group="leg5">
+        <joint name="leg5_jointA" value="0"/>
+        <joint name="leg5_jointB" value="-0.5"/>
+        <joint name="leg5_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="leg6_HOME" group="leg6">
+        <joint name="leg6_jointA" value="0"/>
+        <joint name="leg6_jointB" value="-0.5"/>
+        <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+ <!--PRUEBA PATA 1 ARRIBA-->
+     <group_state name="leg1_UP" group="leg1">
+        <joint name="leg1_jointA" value="-1.214"/>
+        <joint name="leg1_jointB" value="0.981"/>
+        <joint name="leg1_jointC" value="1.722"/>
+    </group_state>
+
+ <!--Todo a Home-->
+    <group_state name="HOME" group="FULLBODY">
+         <joint name="leg1_jointA" value="0"/>
+         <joint name="leg1_jointB" value="-0.5"/>
+         <joint name="leg1_jointC" value="0.5"/>
+
+         <joint name="leg2_jointA" value="0"/>
+         <joint name="leg2_jointB" value="-0.5"/>
+         <joint name="leg2_jointC" value="0.5"/>
+
+         <joint name="leg3_jointA" value="0"/>
+         <joint name="leg3_jointB" value="-0.5"/>
+         <joint name="leg3_jointC" value="0.5"/>
+
+         <joint name="leg4_jointA" value="0"/>
+         <joint name="leg4_jointB" value="-0.5"/>
+         <joint name="leg4_jointC" value="0.5"/>
+
+         <joint name="leg5_jointA" value="0"/>
+         <joint name="leg5_jointB" value="-0.5"/>
+         <joint name="leg5_jointC" value="0.5"/>
+        
+         <joint name="leg6_jointA" value="0"/>
+         <joint name="leg6_jointB" value="-0.5"/>
+         <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+
+ <!--Gaits Arriba (UP)-->
+    <group_state name="WalkingGait1Up" group="Gait1">
+        <joint name="leg1_jointA" value="0"/>
+        <joint name="leg1_jointB" value="-0.2"/>
+        <joint name="leg1_jointC" value="0.5"/>
+
+        <joint name="leg3_jointA" value="0"/>
+        <joint name="leg3_jointB" value="-0.2"/>
+        <joint name="leg3_jointC" value="0.5"/>
+
+        <joint name="leg5_jointA" value="0"/>
+        <joint name="leg5_jointB" value="-0.2"/>
+        <joint name="leg5_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="WalkingGait2Up" group="Gait2">
+        <joint name="leg2_jointA" value="0"/>
+        <joint name="leg2_jointB" value="-0.2"/>
+        <joint name="leg2_jointC" value="0.5"/>
+
+        <joint name="leg4_jointA" value="0"/>
+        <joint name="leg4_jointB" value="-0.2"/>
+        <joint name="leg4_jointC" value="0.5"/>
+
+        <joint name="leg6_jointA" value="0"/>
+        <joint name="leg6_jointB" value="-0.2"/>
+        <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+
+ <!--Gaits Enfrente (FRONT)-->
+    <group_state name="WalkingGait1Front" group="Gait1">
+        <joint name="leg1_jointA" value="-0.2"/>
+        <joint name="leg1_jointB" value="-0.2"/>
+        <joint name="leg1_jointC" value="0.5"/>
+
+        <joint name="leg3_jointA" value="0.2"/>
+        <joint name="leg3_jointB" value="-0.2"/>
+        <joint name="leg3_jointC" value="0.5"/>
+
+        <joint name="leg5_jointA" value="-0.2"/>
+        <joint name="leg5_jointB" value="-0.2"/>
+        <joint name="leg5_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="WalkingGait2Front" group="Gait2">
+        <joint name="leg2_jointA" value="0.2"/>
+        <joint name="leg2_jointB" value="-0.2"/>
+        <joint name="leg2_jointC" value="0.5"/>
+
+        <joint name="leg4_jointA" value="0.2"/>
+        <joint name="leg4_jointB" value="-0.2"/>
+        <joint name="leg4_jointC" value="0.5"/>
+
+        <joint name="leg6_jointA" value="-0.2"/>
+        <joint name="leg6_jointB" value="-0.2"/>
+        <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+ <!--Gaits Enfrente Abajo (FRONT DOWN)-->
+    <group_state name="WalkingGait1FrontDown" group="Gait1">
+        <joint name="leg1_jointA" value="-0.2"/>
+        <joint name="leg1_jointB" value="-0.5"/>
+        <joint name="leg1_jointC" value="0.5"/>
+
+        <joint name="leg3_jointA" value="0.2"/>
+        <joint name="leg3_jointB" value="-0.5"/>
+        <joint name="leg3_jointC" value="0.5"/>
+
+        <joint name="leg5_jointA" value="-0.2"/>
+        <joint name="leg5_jointB" value="-0.5"/>
+        <joint name="leg5_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="WalkingGait2FrontDown" group="Gait2">
+        <joint name="leg2_jointA" value="0.2"/>
+        <joint name="leg2_jointB" value="-0.5"/>
+        <joint name="leg2_jointC" value="0.5"/>
+
+        <joint name="leg4_jointA" value="0.2"/>
+        <joint name="leg4_jointB" value="-0.5"/>
+        <joint name="leg4_jointC" value="0.5"/>
+
+        <joint name="leg6_jointA" value="-0.2"/>
+        <joint name="leg6_jointB" value="-0.5"/>
+        <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+ <!--Gaits Atras (BACK)-->
+     <group_state name="WalkingGait1Back" group="Gait1">
+        <joint name="leg1_jointA" value="0.2"/>
+        <joint name="leg1_jointB" value="-0.2"/>
+        <joint name="leg1_jointC" value="0.5"/>
+
+        <joint name="leg3_jointA" value="-0.2"/>
+        <joint name="leg3_jointB" value="-0.2"/>
+        <joint name="leg3_jointC" value="0.5"/>
+
+        <joint name="leg5_jointA" value="0.2"/>
+        <joint name="leg5_jointB" value="-0.2"/>
+        <joint name="leg5_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="WalkingGait2Back" group="Gait2">
+        <joint name="leg2_jointA" value="-0.2"/>
+        <joint name="leg2_jointB" value="-0.2"/>
+        <joint name="leg2_jointC" value="0.5"/>
+
+        <joint name="leg4_jointA" value="-0.2"/>
+        <joint name="leg4_jointB" value="-0.2"/>
+        <joint name="leg4_jointC" value="0.5"/>
+
+        <joint name="leg6_jointA" value="0.2"/>
+        <joint name="leg6_jointB" value="-0.2"/>
+        <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+ <!--Gaits Atras Abajo (BACKDOWN)-->
+    <group_state name="WalkingGait1BackDown" group="Gait1">
+        <joint name="leg1_jointA" value="0.2"/>
+        <joint name="leg1_jointB" value="-0.5"/>
+        <joint name="leg1_jointC" value="0.5"/>
+
+        <joint name="leg3_jointA" value="-0.2"/>
+        <joint name="leg3_jointB" value="-0.5"/>
+        <joint name="leg3_jointC" value="0.5"/>
+
+        <joint name="leg5_jointA" value="-0.5"/>
+        <joint name="leg5_jointB" value="-0.5"/>
+        <joint name="leg5_jointC" value="0.5"/>
+    </group_state>
+    <group_state name="WalkingGait2BackDown" group="Gait2">
+        <joint name="leg2_jointA" value="-0.2"/>
+        <joint name="leg2_jointB" value="-0.5"/>
+        <joint name="leg2_jointC" value="0.5"/>
+
+        <joint name="leg4_jointA" value="-0.2"/>
+        <joint name="leg4_jointB" value="-0.5"/>
+        <joint name="leg4_jointC" value="0.5"/>
+
+        <joint name="leg6_jointA" value="0.2"/>
+        <joint name="leg6_jointB" value="-0.5"/>
+        <joint name="leg6_jointC" value="0.5"/>
+    </group_state>
+
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+
+    <virtual_joint name="virtual_joint" type="floating" parent_frame="world" child_link="base_footprint"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="base_link" link2="leg1_linkA" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leg2_linkA" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leg3_linkA" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leg4_linkA" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leg5_linkA" reason="Adjacent"/>
+    <disable_collisions link1="base_link" link2="leg6_linkA" reason="Adjacent"/>
+    <disable_collisions link1="leg1_linkA" link2="leg1_linkB" reason="Adjacent"/>
+    <disable_collisions link1="leg1_linkA" link2="leg1_linkC" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg1_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg2_linkC" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg2_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg3_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg3_linkB" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg3_linkC" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg3_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg4_linkB" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg4_linkC" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg4_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg5_linkB" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg1_linkA" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg1_linkC" reason="Adjacent"/>
+    <disable_collisions link1="leg1_linkB" link2="leg1_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg3_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg4_linkB" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg4_linkC" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg4_linkP" reason="Never"/>
+    <disable_collisions link1="leg1_linkB" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkC" link2="leg1_linkP" reason="Adjacent"/>
+    <disable_collisions link1="leg1_linkC" link2="leg2_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkC" link2="leg3_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkC" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkC" link2="leg4_linkB" reason="Never"/>
+    <disable_collisions link1="leg1_linkC" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkP" link2="leg2_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkP" link2="leg3_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkP" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg1_linkP" link2="leg4_linkB" reason="Never"/>
+    <disable_collisions link1="leg1_linkP" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg2_linkB" reason="Adjacent"/>
+    <disable_collisions link1="leg2_linkA" link2="leg2_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg2_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg4_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg4_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg4_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg5_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkA" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg2_linkC" reason="Adjacent"/>
+    <disable_collisions link1="leg2_linkB" link2="leg2_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg4_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg5_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkB" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkC" link2="leg2_linkP" reason="Adjacent"/>
+    <disable_collisions link1="leg2_linkC" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkC" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkC" link2="leg5_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkC" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkC" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkC" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkP" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkP" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg2_linkP" link2="leg5_linkB" reason="Never"/>
+    <disable_collisions link1="leg2_linkP" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg2_linkP" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg2_linkP" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg3_linkB" reason="Adjacent"/>
+    <disable_collisions link1="leg3_linkA" link2="leg3_linkC" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg3_linkP" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg5_linkB" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg3_linkA" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg3_linkB" link2="leg3_linkC" reason="Adjacent"/>
+    <disable_collisions link1="leg3_linkB" link2="leg3_linkP" reason="Never"/>
+    <disable_collisions link1="leg3_linkB" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkB" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkB" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg3_linkB" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg3_linkB" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg3_linkC" link2="leg3_linkP" reason="Adjacent"/>
+    <disable_collisions link1="leg3_linkC" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkC" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkC" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkC" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg3_linkC" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg3_linkC" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg3_linkP" link2="leg4_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkP" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkP" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg3_linkP" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg3_linkP" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg3_linkP" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg4_linkA" link2="leg4_linkB" reason="Adjacent"/>
+    <disable_collisions link1="leg4_linkA" link2="leg4_linkC" reason="Never"/>
+    <disable_collisions link1="leg4_linkA" link2="leg4_linkP" reason="Never"/>
+    <disable_collisions link1="leg4_linkA" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg4_linkA" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg4_linkA" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg4_linkA" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg4_linkB" link2="leg4_linkC" reason="Adjacent"/>
+    <disable_collisions link1="leg4_linkB" link2="leg4_linkP" reason="Never"/>
+    <disable_collisions link1="leg4_linkB" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg4_linkB" link2="leg6_linkB" reason="Never"/>
+    <disable_collisions link1="leg4_linkB" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg4_linkB" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg4_linkC" link2="leg4_linkP" reason="Adjacent"/>
+    <disable_collisions link1="leg4_linkC" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg4_linkC" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg4_linkP" link2="leg5_linkA" reason="Never"/>
+    <disable_collisions link1="leg4_linkP" link2="leg6_linkA" reason="Never"/>
+    <disable_collisions link1="leg5_linkA" link2="leg5_linkB" reason="Adjacent"/>
+    <disable_collisions link1="leg5_linkA" link2="leg5_linkC" reason="Never"/>
+    <disable_collisions link1="leg5_linkA" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg5_linkB" link2="leg5_linkC" reason="Adjacent"/>
+    <disable_collisions link1="leg5_linkB" link2="leg5_linkP" reason="Never"/>
+    <disable_collisions link1="leg5_linkC" link2="leg5_linkP" reason="Adjacent"/>
+    <disable_collisions link1="leg6_linkA" link2="leg6_linkB" reason="Adjacent"/>
+    <disable_collisions link1="leg6_linkA" link2="leg6_linkC" reason="Never"/>
+    <disable_collisions link1="leg6_linkA" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg6_linkB" link2="leg6_linkC" reason="Adjacent"/>
+    <disable_collisions link1="leg6_linkB" link2="leg6_linkP" reason="Never"/>
+    <disable_collisions link1="leg6_linkC" link2="leg6_linkP" reason="Adjacent"/>
+</robot>

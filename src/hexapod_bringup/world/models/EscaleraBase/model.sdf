@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="escalera_base">
+  <pose>2 0 0 0 0 0</pose>
+    <static>true</static>
+    <link name="escalera_link">
+      <visual name="escalera_visual">
+        <geometry>
+          <mesh>
+            <uri>model://escalera_base/meshes/EscaleraBase.STL</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="escalera_collision">
+        <geometry>
+          <mesh>
+            <uri>model://escalera_base/meshes/EscaleraBase.STL</uri>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

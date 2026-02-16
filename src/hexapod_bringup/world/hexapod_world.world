@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="hexapod_world">
+
+    <!-- Luz -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Piso -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Gravedad -->
+    <gravity>0 0 -9.81</gravity>
+
+  </world>
+</sdf>

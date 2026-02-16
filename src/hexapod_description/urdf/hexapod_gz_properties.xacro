@@ -1,0 +1,71 @@
+<robot name="hexapod" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <gazebo reference="base_link">
+  <!-- ===================== 
+    <material>Gazebo/White</material>-->
+    <mu1 value="1.0" />
+    <mu2 value="1.0" />
+  </gazebo>
+
+
+  <gazebo reference="1C_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="2C_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="3C_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="4C_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="5C_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="6C_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="1P_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="2P_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="3P_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="4P_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="5P_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+  <gazebo reference="6P_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+  </gazebo>
+
+</robot>

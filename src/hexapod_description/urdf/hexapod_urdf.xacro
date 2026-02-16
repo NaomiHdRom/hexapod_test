@@ -1,0 +1,469 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="hexapod">
+
+
+  <xacro:property name="mass_A" value="0.0329624385476769"/>
+  <xacro:property name="mass_B" value="0.0491658081930703"/>
+  <xacro:property name="mass_C" value="0.068102557260246"/>
+
+
+  <material name="PLA">
+    <color rgba="0.5 0.5 0.5 1"/>
+  </material>
+
+  
+  <material name="base_white">
+    <color rgba="1 1 1 1"/>
+  </material>
+
+  <material name="leg_blue">
+    <color rgba="0 0 1 1"/>
+  </material>
+
+  <material name="leg_green">
+    <color rgba="0 1 0 1"/>
+  </material>
+
+
+  <link name="base_footprint"/>
+  
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> 
+  </joint>
+
+  <link name="base_link">
+    <inertial>
+      <origin
+        xyz="8.3132949968423E-09 -1.60645398483705E-07 0.0398545694413555"
+        rpy="0 0 0" />
+      <mass
+        value="0.508188386188677" />
+      <inertia
+        ixx="0.00175052303771207"   ixy="-2.89062175548116E-06"   ixz="2.99462448397941E-10"
+        iyy="0.00174770751625814"  iyz="-7.33217095029747E-09"
+        izz="0.00325955756407988" />
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://hexapod_description/meshes/base_link.STL" />
+      </geometry>
+     
+      <material name="base_white"/>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://hexapod_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+ 
+  <xacro:macro name="leg" params="prefix  
+  
+                                          origin_xA origin_yA origin_zA                                 
+                                          origin_xB origin_yB origin_zB                                        
+                                          origin_xC origin_yC origin_zC
+                                          origin_xP origin_yP origin_zP
+
+                                          ixx_A  ixy_A   ixz_A   iyy_A  iyz_A  izz_A
+                                          ixx_B  ixy_B   ixz_B   iyy_B  iyz_B  izz_B
+                                          ixx_C  ixy_C   ixz_C   iyy_C  iyz_C  izz_C
+                                          ixx_P  ixy_P   ixz_P   iyy_P  iyz_P  izz_P
+                                    
+                                          joint_xA joint_yA joint_zA 
+                                          joint_rA joint_pA joint_jA
+
+                                          joint_xB joint_yB joint_zB 
+                                          joint_rB joint_pB joint_jB 
+
+                                          joint_xC joint_yC joint_zC
+                                          joint_rC joint_pC joint_jC  
+
+                                          joint_xP joint_yP joint_zP
+                                          joint_rP joint_pP joint_jP 
+
+                                          axisAx axisBx axisCx  axisPx
+                                          axisAy axisBy axisCy  axisPy                             
+                                          axisAz axisBz axisCz  axisPz
+                                          
+
+                                          stlA_path stlB_path stlC_path   stlP_path
+
+                                          lowerA lowerB lowerC
+                                          upperA upperB upperC
+
+                                          mat_name    
+                                        "                                     >
+
+    <link name="${prefix}_linkA">
+      <inertial>
+        <mass value="${mass_A}"/>
+        <origin xyz="${origin_xA} ${origin_yA} ${origin_zA}" rpy="0 0 0"/>
+        <inertia ixx="${ixx_A}" ixy="${ixy_A}" ixz="${ixz_A}"
+                 iyy="${iyy_A}" iyz="${iyz_A}"
+                 izz="${izz_A}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlA_path}" />
+        </geometry>
+    
+        <material name="${mat_name}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlA_path}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_jointA" type="revolute">
+      <origin xyz="${joint_xA} ${joint_yA} ${joint_zA}" rpy="${joint_rA} ${joint_pA} ${joint_jA}"/>
+      <parent link="base_link"/>
+      <child link="${prefix}_linkA"/>
+      <axis xyz="${axisAx} ${axisAy} ${axisAz}"/>
+      <limit  lower="${lowerA}" upper="${upperA}" effort="10" velocity="1.0"/>
+      <dynamics damping="0.5" friction="0.1"/>
+    </joint>
+
+    <link name="${prefix}_linkB">
+      <inertial>
+        <mass value="${mass_B}"/>
+        <origin xyz="${origin_xB} ${origin_yB} ${origin_zB}" rpy="0 0 0"/>
+        <inertia ixx="${ixx_B}" ixy="${ixy_B}" ixz="${ixz_B}"
+                 iyy="${iyy_B}" iyz="${iyz_B}"
+                 izz="${izz_B}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlB_path}" />
+        </geometry>
+      
+        <material name="${mat_name}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlB_path}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_jointB" type="revolute">
+      <origin xyz="${joint_xB} ${joint_yB} ${joint_zB}" rpy="${joint_rB} ${joint_pB} ${joint_jB}"/>
+      <parent link="${prefix}_linkA"/>
+      <child link="${prefix}_linkB"/>
+      <axis xyz="${axisBx} ${axisBy} ${axisBz}"/>
+      <limit  lower="${lowerB}" upper="${upperB}" effort="10" velocity="1.0"/>
+      <dynamics damping="0.5" friction="0.1"/>
+    </joint>
+
+    <link name="${prefix}_linkC">
+      <inertial>
+        <mass value="${mass_C}"/>
+        <origin xyz="${origin_xC} ${origin_yC} ${origin_zC}" rpy="0 0 0"/>
+        <inertia ixx="${ixx_C}" ixy="${ixy_C}" ixz="${ixz_C}"
+                 iyy="${iyy_C}" iyz="${iyz_C}"
+                 izz="${izz_C}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlC_path}" />
+        </geometry>
+   
+        <material name="${mat_name}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlC_path}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_jointC" type="revolute">
+      <origin xyz="${joint_xC} ${joint_yC} ${joint_zC}" rpy="${joint_rC} ${joint_pC} ${joint_jC}"/>
+      <parent link="${prefix}_linkB"/>
+      <child link="${prefix}_linkC"/>
+      <axis xyz="${axisCx} ${axisCy} ${axisCz}"/>
+      <limit  lower="${lowerC}" upper="${upperC}" effort="10" velocity="1.0"/>
+      <dynamics damping="0.5" friction="0.1"/>
+    </joint>
+
+    <link name="${prefix}_linkP">
+      <inertial>
+        <mass value="0.001"/>
+        <origin xyz="${origin_xP} ${origin_yP} ${origin_zP}" rpy="0 0 0"/>
+        <inertia ixx="${ixx_P}" ixy="${ixx_P}" ixz="${ixz_P}"
+                 iyy="${iyy_P}" iyz="${iyz_P}"
+                 izz="${izz_P}"/>
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlP_path}" />
+        </geometry>
+
+        <material name="${mat_name}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="${stlP_path}" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}_jointP" type="fixed">
+      <origin xyz="${joint_xP} ${joint_yP} ${joint_zP}" rpy="${joint_rP} ${joint_pP} ${joint_jP}"/>
+      <parent link="${prefix}_linkC"/>
+      <child link="${prefix}_linkP"/>
+      <axis xyz="${axisPx} ${axisPy} ${axisPz}"/>
+    </joint>
+
+  </xacro:macro>
+
+
+  <xacro:leg prefix="leg1" 
+             mat_name="leg_blue"
+                           origin_xA="0.0436333077262725"        origin_yA="-0.000983429050531615"       origin_zA="-0.00579099697381125"
+                           origin_xB="0.101870838528152"         origin_yB="-0.00274030558914196"        origin_zB="-0.00335041003005071"
+                           origin_xC="0.0396589922531539"        origin_yC="-0.000979703305875712"       origin_zC="0.0183007881130968"
+                           origin_xP="-0.0774005193641238"       origin_yP="-0.000101516346325103"       origin_zP="-0.00446200209805514"
+
+                           ixx_A="4.11063607279416E-06" ixy_A="2.02839323084862E-07"  ixz_A="6.13000252409731E-07" iyy_A="1.17840539365979E-05" iyz_A="-2.65175105562365E-08" izz_A="1.16182136839027E-05"
+                           ixx_B="7.62687797343541E-06" ixy_B="1.36433680022234E-05"  ixz_B="6.32130646997768E-06" iyy_B="9.61295518656803E-05" iyz_B="-1.69463851792476E-06" izz_B="9.79816595400282E-05"
+                           ixx_C="1.84805656449333E-05" ixy_C="-2.67788613280572E-07" ixz_C="1.32337376294039E-05" iyy_C="7.41762250523367E-05" iyz_C="-9.11230813138536E-08" izz_C="7.94157570878884E-05"
+                           ixx_P="1.63167104597987E-05" ixy_P="-2.27987502279929E-07" ixz_P="-6.6373217611144E-06" iyy_P="7.40141018310191E-05" iyz_P="-1.67439121756891E-07" izz_P="8.14120915733197E-05"
+
+                           joint_xA="-0.066747"     joint_yA="-0.10678"       joint_zA="0.03165"
+                           joint_rA="0"             joint_pA="0.035739"       joint_jA="-2.1204"
+
+                           joint_xB="0.075536"      joint_yB="-0.001836"      joint_zB="0"
+                           joint_rB="0.00047569"    joint_pB="-0.82122"       joint_jB="-0.0094139"
+
+                           joint_xC="0.17108"       joint_yC="-0.00665"       joint_zC="0"
+                           joint_rC="3.1416"        joint_pC="1.0908"         joint_jC="3.1416"
+
+                           joint_xP="0.11638"       joint_yP="-0.00085"       joint_zP="0"
+                           joint_rP="0"             joint_pP="0.30547"        joint_jP="0"
+
+                           axisAx="-0.035728"       axisAy="0"         axisAz="0.99936"
+                           axisBx="0"               axisBy="-1"        axisBz="0"
+                           axisCx="0"               axisCy="-1"        axisCz="0"
+                           axisPx="0"               axisPy="0"         axisPz="0"
+                           
+                           lowerA="-1.5708"                lowerB="-2.96706"             lowerC="-0.872665"
+                           upperA="1.5708"                 upperB="1.74533"              upperC="2.96706" 
+
+                           stlA_path="package://hexapod_description/meshes/1A_link.STL"
+                           stlB_path="package://hexapod_description/meshes/1B_link.STL"
+                           stlC_path="package://hexapod_description/meshes/1C_link.STL"
+                           stlP_path="package://hexapod_description/meshes/1P_link.STL"
+  />
+
+  <xacro:leg prefix="leg2" 
+             mat_name="leg_green"
+                           origin_xA="0.0430928267092412"        origin_yA="-0.00540497612153903"       origin_zA="0.0129538457442289"
+                           origin_xB="0.101870758188408"         origin_yB="-0.00274030552288767"       origin_zB="-0.00335286713403343"
+                           origin_xC="0.0396696358786118"        origin_yC="-0.000979703306244147"      origin_zC="0.0182899254696576"
+                           origin_xP="-0.0774005193641238"       origin_yP="-0.000101517727919047"      origin_zP="-0.00446200215131309"
+
+                           ixx_A="4.2842650710344E-06"  ixy_A="9.70938519171719E-07"  ixz_A="8.71458885550921E-07"   iyy_A="1.16637820306486E-05" iyz_A="-1.23301625642984E-07" izz_A="1.15648566711477E-05"
+                           ixx_B="7.62718300402873E-06" ixy_B="1.36433271242108E-05"  ixz_B="6.32348587175763E-06"   iyy_B="9.6129551905895E-05"  iyz_B="-1.69496760520903E-06" izz_B="9.79813545530303E-05"
+                           ixx_C="1.84768194960925E-05" ixy_C="-2.67775709069847E-07" ixz_C="1.3225109652228E-05"    iyy_C="7.41762250523362E-05" iyz_C="-9.11609949592177E-08" izz_C="7.94195032367302E-05"
+                           ixx_P="1.63167104597985E-05" ixy_P="-2.27987461896302E-07" ixz_P="-6.63732176250068E-06"  iyy_P="7.40141018330569E-05" iyz_P="-1.67439166770418E-07" izz_P="8.14120915712826E-05"
+
+                           joint_xA="-0.12582"        joint_yA="0.0044184"       joint_zA="0.01135"
+                           joint_rA="0"               joint_pA="0"               joint_jA="-3.0654"
+
+                           joint_xB="0.074928"        joint_yB="-0.009527"       joint_zB="0.017601"
+                           joint_rB="0"               joint_pB="-0.78551"        joint_jB="-0.11127"
+
+                           joint_xC="0.1711"          joint_yC="-0.00665"        joint_zC="0"
+                           joint_rC="-3.1416"         joint_pC="1.0906"          joint_jC="-3.1416"
+
+                           joint_xP="0.11639"         joint_yP="-0.00085"        joint_zP="0"
+                           joint_rP="0"               joint_pP="0.30533"         joint_jP="0"
+
+                           axisAx="0"          axisAy="0"         axisAz="1"
+                           axisBx="0"          axisBy="-1"        axisBz="0"
+                           axisCx="0"          axisCy="-1"        axisCz="0"
+                           axisPx="0"          axisPy="0"         axisPz="0"
+                           
+                           lowerA="-1.5708"                lowerB="-2.96706"             lowerC="-0.872665"
+                           upperA="1.5708"                 upperB="1.74533"              upperC="2.96706" 
+
+                           stlA_path="package://hexapod_description/meshes/2A_link.STL"
+                           stlB_path="package://hexapod_description/meshes/2B_link.STL"
+                           stlC_path="package://hexapod_description/meshes/2C_link.STL"
+                           stlP_path="package://hexapod_description/meshes/2P_link.STL"
+  />
+
+  <xacro:leg prefix="leg3" 
+             mat_name="leg_blue"
+                           origin_xA="0.0436333079139021"        origin_yA="-0.000983433795987143"       origin_zA="-0.00579099682872819"
+                           origin_xB="0.101870758152179"         origin_yB="-0.0027403055212869"         origin_zB="-0.00335286720269334"
+                           origin_xC="0.0396696358757853"        origin_yC="-0.000979703304661822"       origin_zC="0.0182899254680321"
+                           origin_xP="-0.0774005194154543"       origin_yP="-0.000101516673262747"       origin_zP="-0.00446200216199027"
+
+                           ixx_A="4.11063610367343E-06" ixy_A="2.02839324882533E-07"  ixz_A="6.13000250342798E-07"  iyy_A="1.1784053976968E-05"  iyz_A="-2.65175120067955E-08" izz_A="1.16182136968584E-05"
+                           ixx_B="7.62718300690091E-06" ixy_B="1.36433271238362E-05"  ixz_B="6.32348589089637E-06"  iyy_B="9.61295519062814E-05" iyz_B="-1.69496760811594E-06" izz_B="9.79813545505293E-05"
+                           ixx_C="1.84768194960843E-05" ixy_C="-2.67775708726413E-07" ixz_C="1.32251096522163E-05"  iyy_C="7.41762250523397E-05" iyz_C="-9.11609950489801E-08" izz_C="7.94195032367347E-05"
+                           ixx_P="1.63167104597984E-05" ixy_P="-2.27987492725121E-07" ixz_P="-6.63732176144121E-06" iyy_P="7.40141018315014E-05" iyz_P="-1.67439132409489E-07" izz_P="8.14120915728379E-05"
+
+                           joint_xA="-0.059099"        joint_yA="0.11119"        joint_zA="0.03165"
+                           joint_rA="0"                joint_pA="0.035732"       joint_jA="2.0683"
+
+                           joint_xB="0.075536"         joint_yB="-0.001836"      joint_zB="0"
+                           joint_rB="0.0004757"        joint_pB="-0.82124"       joint_jB="-0.0094139"
+
+                           joint_xC="0.1711"           joint_yC="-0.00665"       joint_zC="0"
+                           joint_rC="3.1416"           joint_pC="1.0906"         joint_jC="3.1416"
+
+                           joint_xP="0.11639"          joint_yP="-0.00085"       joint_zP="0"
+                           joint_rP="0"                joint_pP="0.30533"        joint_jP="0"
+
+                           axisAx="-0.035728"          axisAy="0"         axisAz="0.99936"
+                           axisBx="5.4838E-05"         axisBy="-1"        axisBz="-5.485E-05"
+                           axisCx="2.3315E-05"         axisCy="-1"        axisCz="7.3974E-05"
+                           axisPx="0"                  axisPy="0"         axisPz="0"
+                           
+                           lowerA="-1.5708"                lowerB="-2.96706"             lowerC="-0.872665"
+                           upperA="1.5708"                 upperB="1.74533"              upperC="2.96706"  
+
+                           stlA_path="package://hexapod_description/meshes/3A_link.STL"
+                           stlB_path="package://hexapod_description/meshes/3B_link.STL"
+                           stlC_path="package://hexapod_description/meshes/3C_link.STL"
+                           stlP_path="package://hexapod_description/meshes/3P_link.STL"
+  />
+
+  <xacro:leg prefix="leg4" 
+             mat_name="leg_green"
+                           origin_xA="0.0436333077638231"        origin_yA="-0.000983426215110494"       origin_zA="-0.00579099697327434"
+                           origin_xB="0.101870757684529"         origin_yB="-0.0027403055893247"         origin_zB="-0.00335286721489159"
+                           origin_xC="0.0396696358785887"        origin_yC="-0.000979703306299984"       origin_zC="0.0182899254696444"
+                           origin_xP="-0.0774005193575977"       origin_yP="-0.000101517750093871"       origin_zP="-0.00446200215934681"
+
+                           ixx_A="4.11063607281274E-06" ixy_A="2.02839323083891E-07"  ixz_A="6.13000252543518E-07"  iyy_A="1.17840539365906E-05" iyz_A="-2.65175105588552E-08" izz_A="1.16182136838759E-05"
+                           ixx_B="7.62718297342003E-06" ixy_B="1.36433271225648E-05"  ixz_B="6.32348587421055E-06"  iyy_B="9.61295518656705E-05" iyz_B="-1.69496760366067E-06" izz_B="9.79813545400391E-05"
+                           ixx_C="1.84768194960873E-05" ixy_C="-2.67775709028505E-07" ixz_C="1.32251096522168E-05"  iyy_C="7.4176225052337E-05"  iyz_C="-9.11609949771886E-08" izz_C="7.94195032367349E-05"
+                           ixx_P="1.63167104569614E-05" ixy_P="-2.27987461284517E-07" ixz_P="-6.63732174861027E-06" iyy_P="7.40141018330899E-05" iyz_P="-1.67439167444342E-07" izz_P="8.14120915740874E-05"
+
+                           joint_xA="0.066747"        joint_yA="0.10678"       joint_zA="0.03165"
+                           joint_rA="0"               joint_pA="0.035732"      joint_jA="1.0212"
+
+                           joint_xB="0.075536"        joint_yB="-0.001836"     joint_zB="0"
+                           joint_rB="0.00047571"      joint_pB="-0.82125"      joint_jB="-0.0094139"
+
+                           joint_xC="0.1711"         joint_yC="-0.00665"       joint_zC="0"
+                           joint_rC="-3.1416"        joint_pC="1.0906"         joint_jC="-3.1416"
+
+                           joint_xP="0.11639"        joint_yP="-0.00085"       joint_zP="0"
+                           joint_rP="0"              joint_pP="0.30533"        joint_jP="0"
+
+                           axisAx="-0.035728"          axisAy="0"          axisAz="0.99936"
+                           axisBx="-3.1787E-05"        axisBy="-1"         axisBz="3.1795E-05"
+                           axisCx="-1.3515E-05"        axisCy="-1"         axisCz="-4.288E-05"
+                           axisPx="0"                  axisPy="0"          axisPz="0"
+                           
+                           lowerA="-1.5708"                lowerB="-2.96706"             lowerC="-0.872665"
+                           upperA="1.5708"                 upperB="1.74533"              upperC="2.96706" 
+
+                           stlA_path="package://hexapod_description/meshes/4A_link.STL"
+                           stlB_path="package://hexapod_description/meshes/4B_link.STL"
+                           stlC_path="package://hexapod_description/meshes/4C_link.STL"
+                           stlP_path="package://hexapod_description/meshes/4P_link.STL"
+  />
+
+  <xacro:leg prefix="leg5" 
+             mat_name="leg_blue"
+                           origin_xA="0.0436333076356487"        origin_yA="-0.00098345668111122"        origin_zA="-0.00579099684997697"
+                           origin_xB="0.101870757949128"         origin_yB="-0.00274030552277019"        origin_zB="-0.00335286752119701"
+                           origin_xC="0.0396696358634261"        origin_yC="-0.000979703306055839"       origin_zC="0.0182899254606058"
+                           origin_xP="-0.0774005193761778"       origin_yP="-0.000101517543398827"       origin_zP="-0.00446200215159187"
+
+                           ixx_A="4.11063610342843E-06" ixy_A="2.02839325081659E-07"  ixz_A="6.13000247996769E-07"  iyy_A="1.17840539747078E-05" iyz_A="-2.65175114774486E-08" izz_A="1.16182136946807E-05"
+                           ixx_B="7.62718301928522E-06" ixy_B="1.36433271221595E-05"  ixz_B="6.32348598076936E-06"  iyy_B="9.6129551905897E-05"  iyz_B="-1.69496762166919E-06" izz_B="9.79813545377717E-05"
+                           ixx_C="1.8476819496087E-05"  ixy_C="-2.67775708985075E-07" ixz_C="1.32251096522173E-05"  iyy_C="7.41762250523371E-05" iyz_C="-9.11609949870549E-08" izz_C="7.94195032367344E-05"
+                           ixx_P="1.63167104607636E-05" ixy_P="-2.27987467278176E-07" ixz_P="-6.63732176704751E-06" iyy_P="7.40141018327849E-05" iyz_P="-1.67439160775431E-07" izz_P="8.14120915705898E-05"
+
+                           joint_xA="0.12585"        joint_yA="-0.0044158"      joint_zA="0.03165"
+                           joint_rA="0"              joint_pA=".035736"         joint_jA="-0.026443"
+
+                           joint_xB="0.075536"       joint_yB="-0.001836"       joint_zB="0"
+                           joint_rB="0.00047569"     joint_pB="-0.82121"        joint_jB="-0.0094139"
+
+                           joint_xC="0.1711"         joint_yC="-0.00665"        joint_zC="0"
+                           joint_rC="3.1416"         joint_pC="1.0907"          joint_jC="3.1416"
+
+                           joint_xP="0.11639"        joint_yP="-0.00085"       joint_zP="0"
+                           joint_rP="0"              joint_pP="0.30533"        joint_jP="0"
+
+                           axisAx="-0.035728"        axisAy="0"         axisAz="0.99936"
+                           axisBx="0"                axisBy="-1"        axisBz="0"
+                           axisCx="0"                axisCy="-1"        axisCz="0"
+                           axisPx="0"                axisPy="0"         axisPz="0"
+                           
+                           lowerA="-1.5708"                lowerB="-2.96706"             lowerC="-0.872665"
+                           upperA="1.5708"                 upperB="1.74533"              upperC="2.96706"  
+
+                           stlA_path="package://hexapod_description/meshes/5A_link.STL"
+                           stlB_path="package://hexapod_description/meshes/5B_link.STL"
+                           stlC_path="package://hexapod_description/meshes/5C_link.STL" 
+                           stlP_path="package://hexapod_description/meshes/5P_link.STL"
+  />
+
+  <xacro:leg prefix="leg6" 
+             mat_name="leg_green"
+                           origin_xA="0.0436333079867383"        origin_yA="-0.000983428255767693"       origin_zA="-0.0057909968276284"
+                           origin_xB="0.101870758200084"         origin_yB="-0.00274030552203741"        origin_zB="-0.0033528671253038"
+                           origin_xC="0.0396696358789481"        origin_yC="-0.000979703306300261"       origin_zC="0.0182899254698594"
+                           origin_xP="-0.0774005193641243"       origin_yP="-0.000101517727918721"       origin_zP="-0.00446200215131345"
+
+                           ixx_A="4.11063610371602E-06" ixy_A="2.02839324881721E-07"  ixz_A="6.13000250602213E-07"  iyy_A="1.17840539769681E-05" iyz_A="-2.65175120138815E-08" izz_A="1.16182136968163E-05"
+                           ixx_B="7.62718300386454E-06" ixy_B="1.36433271242787E-05"  ixz_B="6.32348586912741E-06"  iyy_B="9.61295519062704E-05" iyz_B="-1.6949676048313E-06"  izz_B="9.79813545535768E-05"
+                           ixx_C="1.84768194960872E-05" ixy_C="-2.67775709028101E-07" ixz_C="1.32251096522167E-05"  iyy_C="7.41762250523365E-05" iyz_C="-9.11609949772746E-08" izz_C="7.94195032367344E-05"
+                           ixx_P="1.63167104597986E-05" ixy_P="-2.27987461896634E-07" ixz_P="-6.63732176250068E-06" iyy_P="7.40141018330571E-05" iyz_P="-1.67439166770627E-07" izz_P="8.14120915712827E-05"
+
+                           joint_xA="0.059099"        joint_yA="-0.11119"       joint_zA="0.03165"
+                           joint_rA="0"               joint_pA="0.03574"        joint_jA="-1.0732"
+
+                           joint_xB="0.075536"        joint_yB="-0.001836"      joint_zB="0"
+                           joint_rB="0.00047571"      joint_pB="-0.82125"       joint_jB="-0.0094139"
+
+                           joint_xC="0.1711"          joint_yC="-0.00665"       joint_zC="0"
+                           joint_rC="-3.1416"         joint_pC="1.0906"         joint_jC="3.1416"
+
+                           joint_xP="0.11639"        joint_yP="-0.00085"        joint_zP="0"
+                           joint_rP="0"              joint_pP="0.30533"         joint_jP="0"
+
+                           axisAx="-0.035728"        axisAy="0"                 axisAz="0.99936"
+                           axisBx="0"                axisBy="-1"                axisBz="0"
+                           axisCx="0"                axisCy="-1"                axisCz="0"
+                           axisPx="0"                axisPy="0"                 axisPz="0"
+                           
+                           lowerA="-1.5708"                lowerB="-2.96706"             lowerC="-0.872665"
+                           upperA="1.5708"                 upperB="1.74533"              upperC="2.96706" 
+
+                           stlA_path="package://hexapod_description/meshes/6A_link.STL"
+                           stlB_path="package://hexapod_description/meshes/6B_link.STL"
+                           stlC_path="package://hexapod_description/meshes/6C_link.STL"
+                           stlP_path="package://hexapod_description/meshes/6P_link.STL"
+  />
+  
+
+
+
+</robot>

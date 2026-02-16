@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <ros2_control name="HexapodSystem" type="system">
+    <hardware>
+      <!-- Hardware falso para simulación -->
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <!-- ===================== -->
+    <!-- LEG 1 -->
+    <!-- ===================== -->
+    <joint name="leg1_jointA">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg1_jointB">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg1_jointC">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- ===================== -->
+    <!-- LEG 2 -->
+    <!-- ===================== -->
+    <joint name="leg2_jointA">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg2_jointB">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg2_jointC">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- ===================== -->
+    <!-- LEG 3 -->
+    <!-- ===================== -->
+    <joint name="leg3_jointA">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg3_jointB">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg3_jointC">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- ===================== -->
+    <!-- LEG 4 -->
+    <!-- ===================== -->
+    <joint name="leg4_jointA">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg4_jointB">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg4_jointC">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- ===================== -->
+    <!-- LEG 5 -->
+    <!-- ===================== -->
+    <joint name="leg5_jointA">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg5_jointB">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg5_jointC">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+    <!-- ===================== -->
+    <!-- LEG 6 -->
+    <!-- ===================== -->
+    <joint name="leg6_jointA">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg6_jointB">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="leg6_jointC">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+    </joint>
+
+  </ros2_control>
+
+</robot>
