@@ -4,6 +4,7 @@
   <ros2_control name="HexapodSystem" type="system">
     <hardware>
       <!-- Hardware falso para simulación -->
+      <plugin>mock_components/GenericSystem</plugin>
       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
     </hardware>
 

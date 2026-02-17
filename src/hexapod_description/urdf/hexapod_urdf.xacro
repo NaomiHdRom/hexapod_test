@@ -23,8 +23,7 @@
   <material name="leg_green">
     <color rgba="0 1 0 1"/>
   </material>
-
-
+  
   <link name="base_footprint"/>
   
   <joint name="base_footprint_joint" type="fixed">
@@ -131,7 +130,7 @@
       <parent link="base_link"/>
       <child link="${prefix}_linkA"/>
       <axis xyz="${axisAx} ${axisAy} ${axisAz}"/>
-      <limit  lower="${lowerA}" upper="${upperA}" effort="10" velocity="1.0"/>
+      <limit effort="20.0" lower="${lowerA}" upper="${upperA}" velocity="1.0"/>
       <dynamics damping="0.5" friction="0.1"/>
     </joint>
 
@@ -164,7 +163,7 @@
       <parent link="${prefix}_linkA"/>
       <child link="${prefix}_linkB"/>
       <axis xyz="${axisBx} ${axisBy} ${axisBz}"/>
-      <limit  lower="${lowerB}" upper="${upperB}" effort="10" velocity="1.0"/>
+      <limit effort="20.0" lower="${lowerB}" upper="${upperB}" velocity="1.0"/>
       <dynamics damping="0.5" friction="0.1"/>
     </joint>
 
@@ -197,7 +196,7 @@
       <parent link="${prefix}_linkB"/>
       <child link="${prefix}_linkC"/>
       <axis xyz="${axisCx} ${axisCy} ${axisCz}"/>
-      <limit  lower="${lowerC}" upper="${upperC}" effort="10" velocity="1.0"/>
+      <limit effort="20.0" lower="${lowerC}" upper="${upperC}" velocity="1.0"/>
       <dynamics damping="0.5" friction="0.1"/>
     </joint>
 
@@ -463,6 +462,9 @@
                            stlP_path="package://hexapod_description/meshes/6P_link.STL"
   />
   
+
+
+  <xacro:include filename="$(find hexapod_description)/urdf/hexapod_urdf.ros2_control.xacro"/>
 
 
 

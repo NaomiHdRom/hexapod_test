@@ -3,9 +3,6 @@ controller_manager:
   ros__parameters:
     update_rate: 100  # Hz
 
-    joint_state_broadcaster:
-      type: joint_state_broadcaster/JointStateBroadcaster
-      
     leg1_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
@@ -30,6 +27,8 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
 
 
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
 
 leg1_controller:
   ros__parameters:
@@ -41,9 +40,7 @@ leg1_controller:
       - position
     state_interfaces:
       - position
-   
-    interpolation_method: splines
-
+      - velocity
 leg2_controller:
   ros__parameters:
     joints:
@@ -54,7 +51,7 @@ leg2_controller:
       - position
     state_interfaces:
       - position
-    
+      - velocity
 leg3_controller:
   ros__parameters:
     joints:
@@ -65,7 +62,7 @@ leg3_controller:
       - position
     state_interfaces:
       - position
-     
+      - velocity
 leg4_controller:
   ros__parameters:
     joints:
@@ -76,7 +73,7 @@ leg4_controller:
       - position
     state_interfaces:
       - position
-     
+      - velocity
 leg5_controller:
   ros__parameters:
     joints:
@@ -87,7 +84,7 @@ leg5_controller:
       - position
     state_interfaces:
       - position
- 
+      - velocity
 leg6_controller:
   ros__parameters:
     joints:
@@ -98,4 +95,4 @@ leg6_controller:
       - position
     state_interfaces:
       - position
-  
+      - velocity

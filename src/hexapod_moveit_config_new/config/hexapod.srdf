@@ -153,12 +153,6 @@
         <joint name="leg6_jointB" value="-0.5"/>
         <joint name="leg6_jointC" value="0.5"/>
     </group_state>
- <!--PRUEBA PATA 1 ARRIBA-->
-     <group_state name="leg1_UP" group="leg1">
-        <joint name="leg1_jointA" value="-1.214"/>
-        <joint name="leg1_jointB" value="0.981"/>
-        <joint name="leg1_jointC" value="1.722"/>
-    </group_state>
 
  <!--Todo a Home-->
     <group_state name="HOME" group="FULLBODY">
@@ -325,7 +319,6 @@
     </group_state>
 
     <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
-
     <virtual_joint name="virtual_joint" type="floating" parent_frame="world" child_link="base_footprint"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="base_link" link2="leg1_linkA" reason="Adjacent"/>

@@ -1,141 +1,100 @@
 import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
+from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler, DeclareLaunchArgument
+from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
-from launch.event_handlers import OnProcessStart
+from launch.substitutions import LaunchConfiguration
+
 from launch_ros.actions import Node
 import xacro
 
 
 def generate_launch_description():
 
-    # ----------------------------
-    # Packages
-    # ----------------------------
-    bringup_pkg = get_package_share_directory('hexapod_bringup')
-    moveit_pkg = get_package_share_directory('hexapod_moveit_config_new')
-    rviz_config = os.path.join(moveit_pkg, 'config', 'moveit.rviz')
-   
-  
-    # ----------------------------
-    # Paths
-    # ----------------------------
-    xacro_file = os.path.join(moveit_pkg, 'config', 'hexapod.urdf.xacro')
-    world_file = os.path.join(bringup_pkg, 'world', 'hexapod_world.world')
+    gazebo = ExecuteProcess(
+        cmd=[
+            'gazebo', '--verbose',
+            '-s', 'libgazebo_ros_factory.so',
+            os.path.join(
+                get_package_share_directory('hexapod_bringup'),
+                'world',
+                'hexapod_world.world'
+            )
+        ],
+        output='screen'
+    )
 
-    # ----------------------------
-    # Procesar XACRO
-    # ----------------------------
+    package_path = get_package_share_directory('hexapod_description')
+    xacro_file = os.path.join(package_path, 'urdf', 'hexapod_controller.xacro')
+    rviz_config_path = os.path.join(package_path, 'rviz', 'urdf.rviz')
+
     doc = xacro.parse(open(xacro_file))
-    xacro.process_doc(doc, mappings={'use_gazebo': 'true'})
-    robot_description_xml = doc.toxml()
+    xacro.process_doc(doc)
+    params = {'robot_description': doc.toxml()}
 
-    # ----------------------------
-    # Robot State Publisher
-    # ----------------------------
     node_robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[
-            {'robot_description': robot_description_xml},
-            {'use_sim_time': True}
-        ]
+        parameters=[params]
     )
 
-    # ----------------------------
-    # Gazebo
-    # ----------------------------
-    gazebo = ExecuteProcess(
-        cmd=[
-            'gazebo',
-            '--verbose',
-            '-s', 'libgazebo_ros_factory.so',
-            world_file
-        ],
-        output='screen'
-    )
-
-    # ----------------------------
-    # Spawn robot en Gazebo
-    # ----------------------------
     spawn_entity = Node(
         package='gazebo_ros',
         executable='spawn_entity.py',
-        arguments=[
-            '-topic', 'robot_description',
-            '-entity', 'hexapod'
-        ],
+        arguments=['-topic', 'robot_description', '-entity', 'hexapod'],
         output='screen'
     )
 
-    spawn_entity_handler = RegisterEventHandler(
-        OnProcessStart(
-            target_action=gazebo,
-            on_start=[spawn_entity],
-        )
+    load_joint_state_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'joint_state_broadcaster'],
+        output='screen'
     )
 
-    # ----------------------------
-    # Spawners de controladores (CORRECTO)
-    # ----------------------------
-    controller_spawners = [
-        Node(
-            package="controller_manager",
-            executable="spawner",
-            arguments=[
-                f"leg{i}_controller",
-                "--controller-manager",
-                "/controller_manager"
-            ],
-            output="screen",
-        )
-        for i in range(1, 7)
-    ]
+    hexapod_control = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'active',
+             'hexapod_legs_controller'],
+        output='screen'
+    )
 
-    # ----------------------------
-    # MoveIt
-    # ----------------------------
+    # RViz
+ 
+
+    # 🔥 MoveIt Config NEW
     moveit_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
-            os.path.join(moveit_pkg, 'launch', 'demo.launch.py')
+            os.path.join(
+                get_package_share_directory('hexapod_moveit_config_new'),
+                'launch',
+                'demo.launch.py'
+            )
         ),
         launch_arguments={
-            'use_sim_time': 'true',
+            'use_sim_time': 'true'
         }.items()
     )
 
-    # ----------------------------
-    # TF estático world -> base_footprint para el virtual_joint de MoveIt
-    # ----------------------------
-    world_tf = Node(
-        package='tf2_ros',
-        executable='static_transform_publisher',
-        arguments=['0', '0', '0', '0', '0', '0', 'world', 'base_footprint'],
-        output='screen'
-    )
-
-    # ----------------------------
-    # RViz (solo uno, no doble)
-    # ----------------------------
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        output='screen',
-        arguments=['-d', rviz_config],
-        parameters=[{'use_sim_time': True}],
-    )
-
-    # ----------------------------
-    # Launch final
-    # ----------------------------
     return LaunchDescription([
         gazebo,
         node_robot_state_publisher,
-        spawn_entity_handler,
-        *controller_spawners,
+        spawn_entity,
+
+        RegisterEventHandler(
+            OnProcessExit(
+                target_action=spawn_entity,
+                on_exit=[load_joint_state_controller]
+            )
+        ),
+
+        RegisterEventHandler(
+            OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[hexapod_control]
+            )
+        ),
+
         moveit_launch,
-        world_tf,
-        rviz_node,
+     
     ])
