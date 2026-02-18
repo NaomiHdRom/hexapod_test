@@ -2,8 +2,8 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, IncludeLaunchDescription, RegisterEventHandler
-from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.event_handlers import OnProcessStart
+from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch_ros.actions import Node
 import xacro
 
@@ -11,25 +11,22 @@ import xacro
 def generate_launch_description():
 
     # ----------------------------
-    # Packages
+    # Paths
     # ----------------------------
     bringup_pkg = get_package_share_directory('hexapod_bringup')
     moveit_pkg = get_package_share_directory('hexapod_moveit_config_new')
+
     rviz_config = os.path.join(moveit_pkg, 'config', 'moveit.rviz')
-   
-  
-    # ----------------------------
-    # Paths
-    # ----------------------------
     xacro_file = os.path.join(moveit_pkg, 'config', 'hexapod.urdf.xacro')
     world_file = os.path.join(bringup_pkg, 'world', 'hexapod_world.world')
 
     # ----------------------------
-    # Procesar XACRO
+    # Procesar XACRO (FORMA CORRECTA)
     # ----------------------------
-    doc = xacro.parse(open(xacro_file))
-    xacro.process_doc(doc, mappings={'use_gazebo': 'true'})
-    robot_description_xml = doc.toxml()
+    robot_description_xml = xacro.process_file(
+        xacro_file,
+        mappings={'use_gazebo': 'true'}
+    ).toxml()
 
     # ----------------------------
     # Robot State Publisher
@@ -58,7 +55,7 @@ def generate_launch_description():
     )
 
     # ----------------------------
-    # Spawn robot en Gazebo
+    # Spawn robot
     # ----------------------------
     spawn_entity = Node(
         package='gazebo_ros',
@@ -78,18 +75,18 @@ def generate_launch_description():
     )
 
     # ----------------------------
-    # Spawners de controladores (CORRECTO)
+    # Controllers
     # ----------------------------
     controller_spawners = [
         Node(
-            package="controller_manager",
-            executable="spawner",
+            package='controller_manager',
+            executable='spawner',
             arguments=[
-                f"leg{i}_controller",
-                "--controller-manager",
-                "/controller_manager"
+                f'leg{i}_controller',
+                '--controller-manager',
+                '/controller_manager'
             ],
-            output="screen",
+            output='screen'
         )
         for i in range(1, 7)
     ]
@@ -101,13 +98,11 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(moveit_pkg, 'launch', 'demo.launch.py')
         ),
-        launch_arguments={
-            'use_sim_time': 'true',
-        }.items()
+        launch_arguments={'use_sim_time': 'true'}.items()
     )
 
     # ----------------------------
-    # TF estático world -> base_footprint para el virtual_joint de MoveIt
+    # TF world -> base_footprint
     # ----------------------------
     world_tf = Node(
         package='tf2_ros',
@@ -117,7 +112,7 @@ def generate_launch_description():
     )
 
     # ----------------------------
-    # RViz (solo uno, no doble)
+    # RViz (CORRECTO)
     # ----------------------------
     rviz_node = Node(
         package='rviz2',
