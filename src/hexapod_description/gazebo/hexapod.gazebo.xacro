@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="hexapod_gazebo">
+
+  <!-- Macro principal para Gazebo -->
+  <xacro:macro name="hexapod_gazebo" params="prefix">
+
+    <!--Base-->
+
+    <gazebo reference="${prefix}base_link">
+      <material>Gazebo/Gray</material>
+      <mu>1.0</mu>
+      <mu2>1.0</mu2>
+      <kp>100000</kp>
+      <kd>1</kd>
+    </gazebo>
+
+    <!-- Macro para links de las patas  -->
+    <xacro:macro name="LegGazebo" params="prefix">
+      <!-- Cada link de la pata: A, B, C -->
+      <gazebo reference="${prefix}_linkA">
+        <mu>0.7</mu>
+        <mu2>0.7</mu2>
+        <kp>50000</kp>
+        <kd>1</kd>
+      </gazebo>
+      <gazebo reference="${prefix}_linkB">
+        <mu>0.7</mu>
+        <mu2>0.7</mu2>
+        <kp>50000</kp>
+        <kd>1</kd>
+      </gazebo>
+      <gazebo reference="${prefix}_linkC">
+        <mu>0.7</mu>
+        <mu2>0.7</mu2>
+        <kp>50000</kp>
+        <kd>1</kd>
+      </gazebo>
+
+      <!-- Pie: linkP con sensor de contacto -->
+      <gazebo reference="${prefix}_linkP">
+        <mu>1.0</mu>
+        <mu2>1.0</mu2>
+        <kp>50000</kp>
+        <kd>1</kd>
+      </gazebo>
+
+      <gazebo reference="${prefix}_linkP">
+        <sensor type="contact" name="${prefix}_contact">
+          <always_on>1</always_on>
+          <update_rate>50</update_rate>
+          <contact>
+            <collision>${prefix}_linkP_collision</collision>
+          </contact>
+        </sensor>
+      </gazebo>
+    </xacro:macro>
+
+    <!-- Aplicar macro a las 6 patas -->
+    <xacro:LegGazebo prefix="${prefix}leg1"/>
+    <xacro:LegGazebo prefix="${prefix}leg2"/>
+    <xacro:LegGazebo prefix="${prefix}leg3"/>
+    <xacro:LegGazebo prefix="${prefix}leg4"/>
+    <xacro:LegGazebo prefix="${prefix}leg5"/>
+    <xacro:LegGazebo prefix="${prefix}leg6"/>
+
+  </xacro:macro>
+
+</robot>

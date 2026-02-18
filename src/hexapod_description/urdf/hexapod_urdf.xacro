@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="hexapod">
 
+  <!-- Hardware interface selection -->
+  <xacro:arg name="use_gazebo" default="false" />
+  <xacro:arg name="use_fake_hardware" default="false" />
+  <xacro:arg name="fake_sensor_commands" default="false" />
 
+ <!-- Properties -->
   <xacro:property name="mass_A" value="0.0329624385476769"/>
   <xacro:property name="mass_B" value="0.0491658081930703"/>
   <xacro:property name="mass_C" value="0.068102557260246"/>
@@ -24,14 +29,7 @@
     <color rgba="0 1 0 1"/>
   </material>
 
-
-  <link name="base_footprint"/>
-  
-  <joint name="base_footprint_joint" type="fixed">
-    <parent link="base_footprint"/>
-    <child link="base_link"/>
-    <origin xyz="0 0 0" rpy="0 0 0"/> 
-  </joint>
+ <!-- Robot Construction -->
 
   <link name="base_link">
     <inertial>
@@ -464,6 +462,8 @@
   />
   
 
+  <xacro:include filename="package://hexapod_description/xacro/hexapod.gazebo.xacro"/>
+  <xacro:hexapod_gazebo prefix=""/>
 
 
 </robot>

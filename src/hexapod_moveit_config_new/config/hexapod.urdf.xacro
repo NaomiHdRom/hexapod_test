@@ -1,110 +1,20 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="hexapod">
-
-  <!-- ========================= -->
-  <!-- Arguments -->
-  <!-- ========================= -->
-
-  <!-- Switch: false = MoveIt/RViz, true = Gazebo -->
-  <xacro:arg name="use_gazebo" default="false"/>
-
-  <xacro:arg
-    name="initial_positions_file"
-    default="$(find hexapod_moveit_config_new)/config/initial_positions.yaml"/>
-
-  <!-- ========================= -->
-  <!-- Robot model -->
-  <!-- ========================= -->
-
-  <!-- Main hexapod geometry + joints -->
-  <xacro:include filename="$(find hexapod_description)/urdf/hexapod_urdf.xacro"/>
-
-  <!-- ros2_control definition -->
-  <xacro:include filename="$(find hexapod_moveit_config_new)/config/hexapod.ros2_control.xacro"/>
-
-  <!-- ========================= -->
-  <!-- TRANSMISSIONS (🔥 LO QUE FALTABA 🔥) -->
-  <!-- ========================= -->
-
-  <!-- Macro: effort transmission for Gazebo -->
-  <xacro:macro name="effort_transmission" params="joint_name">
-    <transmission name="${joint_name}_trans">
-      <type>transmission_interface/SimpleTransmission</type>
-
-      <joint name="${joint_name}">
-        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      </joint>
-
-      <actuator name="${joint_name}_motor">
-        <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
-      </actuator>
-    </transmission>
-  </xacro:macro>
-
-  <!-- ========================= -->
-  <!-- Apply transmissions ONLY in Gazebo -->
-  <!-- ========================= -->
-
-  <xacro:if value="$(arg use_gazebo)">
-
-    <!-- Leg 1 -->
-    <xacro:effort_transmission joint_name="leg1_jointA"/>
-    <xacro:effort_transmission joint_name="leg1_jointB"/>
-    <xacro:effort_transmission joint_name="leg1_jointC"/>
-
-    <!-- Leg 2 -->
-    <xacro:effort_transmission joint_name="leg2_jointA"/>
-    <xacro:effort_transmission joint_name="leg2_jointB"/>
-    <xacro:effort_transmission joint_name="leg2_jointC"/>
-
-    <!-- Leg 3 -->
-    <xacro:effort_transmission joint_name="leg3_jointA"/>
-    <xacro:effort_transmission joint_name="leg3_jointB"/>
-    <xacro:effort_transmission joint_name="leg3_jointC"/>
-
-    <!-- Leg 4 -->
-    <xacro:effort_transmission joint_name="leg4_jointA"/>
-    <xacro:effort_transmission joint_name="leg4_jointB"/>
-    <xacro:effort_transmission joint_name="leg4_jointC"/>
-
-    <!-- Leg 5 -->
-    <xacro:effort_transmission joint_name="leg5_jointA"/>
-    <xacro:effort_transmission joint_name="leg5_jointB"/>
-    <xacro:effort_transmission joint_name="leg5_jointC"/>
-
-    <!-- Leg 6 -->
-    <xacro:effort_transmission joint_name="leg6_jointA"/>
-    <xacro:effort_transmission joint_name="leg6_jointB"/>
-    <xacro:effort_transmission joint_name="leg6_jointC"/>
-
-  </xacro:if>
-
-  <!-- ========================= -->
-  <!-- Control backends -->
-  <!-- ========================= -->
-
-  <!-- ===== MoveIt / RViz (NO Gazebo) ===== -->
-  <xacro:unless value="$(arg use_gazebo)">
-    <xacro:hexapod_ros2_control
-      name="FakeSystem"
-      initial_positions_file="$(arg initial_positions_file)"/>
-  </xacro:unless>
-
-  <gazebo>
-    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
-      <robot_namespace>/</robot_namespace>
-      <parameters>$(find hexapod_moveit_config_new)/config/ros2_controllers.yaml</parameters>
-    </plugin>
-  </gazebo>
-
-
-
-  <!-- ===== Gazebo ===== -->
-  <xacro:if value="$(arg use_gazebo)">
-    <xacro:hexapod_ros2_control
-      name="HexapodSystem"
-      initial_positions_file="$(arg initial_positions_file)"/>
-  </xacro:if>
-
+  <!-- MoveIt configuration for Gazebo simulation -->
+  <xacro:arg name="prefix" default="" />
+  <!-- Hardware interface selection for simulation -->
+   <xacro:arg name="use_gazebo" default="false" />
+   <xacro:arg name="use_fake_hardware" default="false" />
+   <xacro:arg name="fake_sensor_commands" default="false" />
+  <!-- Include main hexapod definition from description package -->
+  <xacro:include filename="$(find hexapod_description)/urdf/hexapod_urdf.xacro" />
+  <!-- Create complete hexapod robot for MoveIt simulation -->
+  <xacro:hexapod_urdf 
+        use_sim="true" 
+        prefix="$(arg prefix)" 
+        use_gazebo="$(arg use_gazebo)" 
+        use_fake_hardware="$(arg use_fake_hardware)"
+        fake_sensor_commands="$(arg fake_sensor_commands)"
+        port_name="$(arg port_name)"
+        baud_rate="$(arg baud_rate)" />
 </robot>

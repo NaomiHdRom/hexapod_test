@@ -15,6 +15,8 @@ Visualization Manager:
       Value: true
     - Class: moveit_rviz_plugin/MotionPlanning
       Name: MotionPlanning
+      Plannig Request:
+        Orient Interactive Marker: Fixed
       Planned Path:
         Loop Animation: true
         State Display Time: 0.05 s
@@ -27,7 +29,7 @@ Visualization Manager:
         Robot Alpha: 0.5
       Value: true
   Global Options:
-    Fixed Frame: base_footprint
+    Fixed Frame: world
   Tools:
     - Class: rviz_default_plugins/Interact
     - Class: rviz_default_plugins/MoveCamera
