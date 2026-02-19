@@ -1,104 +1,78 @@
-# This config file is used by ros2_control
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Hz
+    update_rate: 100
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
-      
+
     leg1_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
+      joints:
+        - leg1_jointA
+        - leg1_jointB
+        - leg1_jointC
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
 
     leg2_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
+      joints:
+        - leg2_jointA
+        - leg2_jointB
+        - leg2_jointC
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
 
     leg3_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
+      joints:
+        - leg3_jointA
+        - leg3_jointB
+        - leg3_jointC
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
 
     leg4_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
+      joints:
+        - leg4_jointA
+        - leg4_jointB
+        - leg4_jointC
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
 
     leg5_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
+      joints:
+        - leg5_jointA
+        - leg5_jointB
+        - leg5_jointC
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity
 
     leg6_controller:
       type: joint_trajectory_controller/JointTrajectoryController
-
-
-
-leg1_controller:
-  ros__parameters:
-    joints:
-      - leg1_jointA
-      - leg1_jointB
-      - leg1_jointC
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    interpolation_method: splines
-
-leg2_controller:
-  ros__parameters:
-    joints:
-      - leg2_jointA
-      - leg2_jointB
-      - leg2_jointC
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-    
-leg3_controller:
-  ros__parameters:
-    joints:
-      - leg3_jointA
-      - leg3_jointB
-      - leg3_jointC
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-     
-leg4_controller:
-  ros__parameters:
-    joints:
-      - leg4_jointA
-      - leg4_jointB
-      - leg4_jointC
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-leg5_controller:
-  ros__parameters:
-    joints:
-      - leg5_jointA
-      - leg5_jointB
-      - leg5_jointC
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-leg6_controller:
-  ros__parameters:
-    joints:
-      - leg6_jointA
-      - leg6_jointB
-      - leg6_jointC
-    command_interfaces:
-      - position
-    state_interfaces:
-      - position
-      - velocity
-  
+      joints:
+        - leg6_jointA
+        - leg6_jointB
+        - leg6_jointC
+      command_interfaces:
+        - position
+      state_interfaces:
+        - position
+        - velocity

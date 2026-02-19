@@ -462,7 +462,7 @@
   />
   
 
-  <xacro:include filename="package://hexapod_description/xacro/hexapod.gazebo.xacro"/>
+  <xacro:include filename="package://hexapod_description/gazebo/hexapod.gazebo.xacro"/>
   <xacro:hexapod_gazebo prefix=""/>
 
 
