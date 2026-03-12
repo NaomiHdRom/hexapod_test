@@ -131,8 +131,8 @@
       <parent link="base_link"/>
       <child link="${prefix}_linkA"/>
       <axis xyz="${axisAx} ${axisAy} ${axisAz}"/>
-      <limit  lower="${lowerA}" upper="${upperA}" effort="10" velocity="1.0"/>
-      <dynamics damping="0.5" friction="0.1"/>
+      <limit  lower="${lowerA}" upper="${upperA}" effort="1.0" velocity="1.0"/>
+      <dynamics damping="1.0" friction="0.2"/>
     </joint>
 
     <link name="${prefix}_linkB">
@@ -164,8 +164,8 @@
       <parent link="${prefix}_linkA"/>
       <child link="${prefix}_linkB"/>
       <axis xyz="${axisBx} ${axisBy} ${axisBz}"/>
-      <limit  lower="${lowerB}" upper="${upperB}" effort="10" velocity="1.0"/>
-      <dynamics damping="0.5" friction="0.1"/>
+      <limit  lower="${lowerB}" upper="${upperB}" effort="1.0" velocity="1.0"/>
+      <dynamics damping="1.0" friction="0.2"/>
     </joint>
 
     <link name="${prefix}_linkC">
@@ -197,15 +197,15 @@
       <parent link="${prefix}_linkB"/>
       <child link="${prefix}_linkC"/>
       <axis xyz="${axisCx} ${axisCy} ${axisCz}"/>
-      <limit  lower="${lowerC}" upper="${upperC}" effort="10" velocity="1.0"/>
-      <dynamics damping="0.5" friction="0.1"/>
+      <limit  lower="${lowerC}" upper="${upperC}" effort="1.0" velocity="1.0"/>
+      <dynamics damping="1.0" friction="0.2"/>
     </joint>
 
     <link name="${prefix}_linkP">
       <inertial>
-        <mass value="0.001"/>
+        <mass value="0.002"/>
         <origin xyz="${origin_xP} ${origin_yP} ${origin_zP}" rpy="0 0 0"/>
-        <inertia ixx="${ixx_P}" ixy="${ixx_P}" ixz="${ixz_P}"
+        <inertia ixx="${ixx_P}" ixy="${ixy_P}" ixz="${ixz_P}"
                  iyy="${iyy_P}" iyz="${iyz_P}"
                  izz="${izz_P}"/>
       </inertial>
@@ -463,6 +463,7 @@
                            stlP_path="package://hexapod_description/meshes/6P_link.STL"
   />
   
+  <xacro:include filename="$(find hexapod_description)/urdf/hexapod_gz_properties.xacro"/>
 
 
 
