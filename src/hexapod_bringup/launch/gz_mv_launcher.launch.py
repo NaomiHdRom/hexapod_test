@@ -18,7 +18,7 @@ def generate_launch_description():
 
     rviz_config = os.path.join(moveit_pkg, 'config', 'moveit.rviz')
     xacro_file = os.path.join(moveit_pkg, 'config', 'hexapod.urdf.xacro')
-    world_file = os.path.join(bringup_pkg, 'world', 'hexapod_world.world')
+    world_file = os.path.join(bringup_pkg, 'world', 'test_world.world')
 
     # ----------------------------
     # Procesar XACRO (FORMA CORRECTA)

@@ -59,7 +59,7 @@
         rpy="0 0 0" />
       <geometry>
         <mesh
-          filename="package://hexapod_description/meshes/base_link.STL" />
+          filename="package://hexapod_description/meshes/base_link_collider.dae" />
       </geometry>
     </collision>
   </link>
@@ -94,7 +94,8 @@
                                           axisAz axisBz axisCz  axisPz
                                           
 
-                                          stlA_path stlB_path stlC_path   stlP_path
+                                          stlA_path stlB_path stlC_path  stlP_path
+                                          colA_path colB_path colC_path 
 
                                           lowerA lowerB lowerC
                                           upperA upperB upperC
@@ -121,7 +122,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="${stlA_path}" />
+          <mesh filename="${colA_path}" />
         </geometry>
       </collision>
     </link>
@@ -154,7 +155,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="${stlB_path}" />
+          <mesh filename="${colB_path}" />
         </geometry>
       </collision>
     </link>
@@ -187,7 +188,7 @@
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="${stlC_path}" />
+          <mesh filename="${colC_path}" />
         </geometry>
       </collision>
     </link>
@@ -205,7 +206,7 @@
       <inertial>
         <mass value="0.001"/>
         <origin xyz="${origin_xP} ${origin_yP} ${origin_zP}" rpy="0 0 0"/>
-        <inertia ixx="${ixx_P}" ixy="${ixx_P}" ixz="${ixz_P}"
+        <inertia ixx="${ixx_P}" ixy="${ixy_P}" ixz="${ixz_P}"
                  iyy="${iyy_P}" iyz="${iyz_P}"
                  izz="${izz_P}"/>
       </inertial>
@@ -217,12 +218,6 @@
 
         <material name="${mat_name}"/>
       </visual>
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="${stlP_path}" />
-        </geometry>
-      </collision>
     </link>
 
     <joint name="${prefix}_jointP" type="fixed">
@@ -271,6 +266,11 @@
                            stlB_path="package://hexapod_description/meshes/1B_link.STL"
                            stlC_path="package://hexapod_description/meshes/1C_link.STL"
                            stlP_path="package://hexapod_description/meshes/1P_link.STL"
+                        
+
+                           colA_path="package://hexapod_description/meshes/1A_link_collider.dae"
+                           colB_path="package://hexapod_description/meshes/1B_link_collider.dae"
+                           colC_path="package://hexapod_description/meshes/1C_link_collider.dae"
   />
 
   <xacro:leg prefix="leg2" 
@@ -308,7 +308,12 @@
                            stlA_path="package://hexapod_description/meshes/2A_link.STL"
                            stlB_path="package://hexapod_description/meshes/2B_link.STL"
                            stlC_path="package://hexapod_description/meshes/2C_link.STL"
-                           stlP_path="package://hexapod_description/meshes/2P_link.STL"
+                           stlP_path="package://hexapod_description/meshes/1P_link.STL"
+                    
+
+                           colA_path="package://hexapod_description/meshes/1A_link_collider.dae"
+                           colB_path="package://hexapod_description/meshes/1B_link_collider.dae"
+                           colC_path="package://hexapod_description/meshes/1C_link_collider.dae"
   />
 
   <xacro:leg prefix="leg3" 
@@ -346,7 +351,12 @@
                            stlA_path="package://hexapod_description/meshes/3A_link.STL"
                            stlB_path="package://hexapod_description/meshes/3B_link.STL"
                            stlC_path="package://hexapod_description/meshes/3C_link.STL"
-                           stlP_path="package://hexapod_description/meshes/3P_link.STL"
+                           stlP_path="package://hexapod_description/meshes/1P_link.STL"
+                       
+
+                           colA_path="package://hexapod_description/meshes/1A_link_collider.dae"
+                           colB_path="package://hexapod_description/meshes/1B_link_collider.dae"
+                           colC_path="package://hexapod_description/meshes/1C_link_collider.dae"
   />
 
   <xacro:leg prefix="leg4" 
@@ -384,7 +394,11 @@
                            stlA_path="package://hexapod_description/meshes/4A_link.STL"
                            stlB_path="package://hexapod_description/meshes/4B_link.STL"
                            stlC_path="package://hexapod_description/meshes/4C_link.STL"
-                           stlP_path="package://hexapod_description/meshes/4P_link.STL"
+                           stlP_path="package://hexapod_description/meshes/1P_link.STL"
+
+                           colA_path="package://hexapod_description/meshes/1A_link_collider.dae"
+                           colB_path="package://hexapod_description/meshes/1B_link_collider.dae"
+                           colC_path="package://hexapod_description/meshes/1C_link_collider.dae"                     
   />
 
   <xacro:leg prefix="leg5" 
@@ -422,7 +436,11 @@
                            stlA_path="package://hexapod_description/meshes/5A_link.STL"
                            stlB_path="package://hexapod_description/meshes/5B_link.STL"
                            stlC_path="package://hexapod_description/meshes/5C_link.STL" 
-                           stlP_path="package://hexapod_description/meshes/5P_link.STL"
+                           stlP_path="package://hexapod_description/meshes/1P_link.STL"
+                           
+                           colA_path="package://hexapod_description/meshes/1A_link_collider.dae"
+                           colB_path="package://hexapod_description/meshes/1B_link_collider.dae"
+                           colC_path="package://hexapod_description/meshes/1C_link_collider.dae"
   />
 
   <xacro:leg prefix="leg6" 
@@ -460,7 +478,11 @@
                            stlA_path="package://hexapod_description/meshes/6A_link.STL"
                            stlB_path="package://hexapod_description/meshes/6B_link.STL"
                            stlC_path="package://hexapod_description/meshes/6C_link.STL"
-                           stlP_path="package://hexapod_description/meshes/6P_link.STL"
+                           stlP_path="package://hexapod_description/meshes/1P_link.STL"
+
+                           colA_path="package://hexapod_description/meshes/1A_link_collider.dae"
+                           colB_path="package://hexapod_description/meshes/1B_link_collider.dae"
+                           colC_path="package://hexapod_description/meshes/1C_link_collider.dae"
   />
   
 
